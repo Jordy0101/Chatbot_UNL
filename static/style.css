@@ -1,38 +1,28 @@
+/* Estilos generales */
+body {
+    background-color: #4d7da1; /* Color de fondo */
+    font-family: 'Arial', sans-serif;
+}
+
 /* Chatbox styling */
 .chat-box {
     height: 300px;
     overflow-y: auto;
     background-color: #f8f9fa;
     border-radius: 8px;
-}
-
-/* Message styles */
-.message {
-    margin: 10px 0;
-    text-align: left;
-}
-.user-message {
-    text-align: right;
-}
-.message p {
     padding: 10px;
-    border-radius: 8px;
-    background-color: #dcdcdc;
-    display: inline-block;
-    max-width: 80%;
 }
 
-/* Botón de flujo */
-.flujo-container button {
-    margin-right: 20px;
-}
-
-/* Iframe styling */
+/* Iframe styling para el flujo de titulación */
 #canva-flujo {
     width: 100%;
     height: 400px;
     display: none; /* Oculto por defecto */
+    transition: opacity 0.5s ease; /* Solo la opacidad, sin altura */
+    opacity: 0; /* Comienza con opacidad 0 */
 }
+
+/* Estilo para el iframe */
 iframe {
     width: 100%;
     height: 100%;
@@ -40,59 +30,29 @@ iframe {
     box-shadow: 0 2px 8px 0 rgba(63, 69, 81, 0.16);
 }
 
+/* Mostrar el iframe cuando está visible */
+#canva-flujo.mostrar {
+    display: block; /* Cambiar a bloque para mostrar */
+    opacity: 1; /* Cambiar a opacidad 1 para mostrar */
+}
+
 /* Estudiante icon */
 #estudiante-icon {
     max-width: 150px;
+    margin-bottom: 20px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    #canva-flujo {
-        height: 300px;
-    }
-}
-/* Estilos para los mensajes del chatbot */
-.chat-box {
-    background-color: #f4f4f9;
-    border-radius: 10px;
-    padding: 10px;
-    max-height: 400px;
-    overflow-y: scroll;
-}
-
-.message {
-    margin: 10px 0;
-    padding: 10px;
+/* Botón de flujo */
+.flujo-container button {
+    margin-right: 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
     border-radius: 5px;
-    background-color: #e9ecef;
-    word-wrap: break-word;
-}
-
-.user-message {
-    background-color: #d1e7dd;
-}
-
-.message p {
-    margin: 0;
+    padding: 10px 20px;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
-
-.message ul {
-    padding-left: 20px;
-}
-
-.message ul li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-}
-
-.message h3 {
-    font-size: 18px;
-    margin-bottom: 5px;
-    color: #343a40;
-}
-/* Fondo general del chatbot */
-body {
-    background-color: #4d7da1; /* Un gris muy suave */
-    font-family: 'Arial', sans-serif;
+.flujo-container button:hover {
+    background-color: #495057;
 }

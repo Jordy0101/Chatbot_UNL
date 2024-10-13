@@ -1,9 +1,17 @@
 function mostrarFlujo() {
     const canvaFlujo = document.getElementById('canva-flujo');
+    
+    // Alternar la clase 'mostrar' para mostrar u ocultar el iframe
     if (canvaFlujo.style.display === "none") {
-        canvaFlujo.style.display = "block";
+        canvaFlujo.style.display = "block"; // Mostrar el iframe
+        setTimeout(() => { // Esperar a que el display se haya establecido para aplicar opacidad
+            canvaFlujo.style.opacity = "1"; // Cambiar a opacidad 1
+        }, 10); // Timeout pequeño para asegurar que el navegador renderice el cambio de display antes de cambiar la opacidad
     } else {
-        canvaFlujo.style.display = "none";
+        canvaFlujo.style.opacity = "0"; // Cambiar a opacidad 0
+        setTimeout(() => { // Esperar a que la opacidad se haya establecido antes de ocultar el iframe
+            canvaFlujo.style.display = "none"; // Ocultar el iframe
+        }, 500); // Este tiempo debe coincidir con la duración de la transición de opacidad
     }
 }
 

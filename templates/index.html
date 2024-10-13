@@ -35,7 +35,7 @@
         <div class="flujo-container text-center">
             <button class="btn btn-info mb-3" onclick="mostrarFlujo()">Ver flujo del proceso de titulación</button>
 
-            <div id="canva-flujo" class="mb-3">
+            <div id="canva-flujo" class="mb-3" style="display: none;"> <!-- Oculto por defecto -->
                 <iframe loading="lazy" src="https://www.canva.com/design/DAGTZj7QawA/Kcw9R7fZ2lgKC6VCoSDthA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
                 <a href="https://www.canva.com/design/DAGTZj7QawA/Kcw9R7fZ2lgKC6VCoSDthA/view?utm_content=DAGTZj7QawA&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
                     target="_blank" rel="noopener">Presentación Marco Teórico Ciencia Ilustrativo colorido</a> de Maria Del Carmen Salazar Torres
@@ -47,6 +47,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="index.js"></script> <!-- Enlace al archivo de JavaScript separado -->
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+
 </body>
 </html>

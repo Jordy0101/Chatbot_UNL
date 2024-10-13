@@ -51,3 +51,48 @@ iframe {
         height: 300px;
     }
 }
+/* Estilos para los mensajes del chatbot */
+.chat-box {
+    background-color: #f4f4f9;
+    border-radius: 10px;
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.message {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background-color: #d1e7dd;
+}
+
+.message p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.message ul {
+    padding-left: 20px;
+}
+
+.message ul li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.message h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #343a40;
+}
+/* Fondo general del chatbot */
+body {
+    background-color: #4d7da1; /* Un gris muy suave */
+    font-family: 'Arial', sans-serif;
+}

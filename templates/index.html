@@ -47,41 +47,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script>
-        function mostrarFlujo() {
-            const canvaFlujo = document.getElementById('canva-flujo');
-            if (canvaFlujo.style.display === "none") {
-                canvaFlujo.style.display = "block";
-            } else {
-                canvaFlujo.style.display = "none";
-            }
-        }
-
-        function hacerPregunta(pregunta) {
-            document.getElementById('pregunta').value = pregunta;
-            document.getElementById('send-btn').click();
-        }
-
-        document.getElementById('send-btn').onclick = async function() {
-            const pregunta = document.getElementById('pregunta').value;
-            const chatBox = document.getElementById('chat-box');
-
-            chatBox.innerHTML += `<div class="message user-message"><p>${pregunta}</p></div>`;
-            
-            const response = await fetch('/ask', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ pregunta }),
-            });
-            const data = await response.json();
-
-            chatBox.innerHTML += `<div class="message"><p>${data.respuesta}</p></div>`;
-            document.getElementById('pregunta').value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-        };
-    </script>
+    <script src="index.js"></script> <!-- Enlace al archivo de JavaScript separado -->
 </body>
 </html>

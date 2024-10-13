@@ -4,37 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
+    <!-- Vinculando Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="chat-container">
-        <h1>¡Hola! Soy tu chatbot</h1>
-        <div id="chat-box" class="chat-box"></div>
+    <div class="container text-center mt-5">
+        <h1 class="mb-4">¡Hola! Soy tu chatbot</h1>
+        <div id="chat-box" class="chat-box border p-3 mb-3"></div>
         
         <div id="sugerencias" class="sugerencias">
-            <h2>Preguntas sugeridas:</h2>
-            <ul>
-                <li onclick="hacerPregunta('¿Cuáles son los objetivos del reglamento académico?')">¿Cuáles son los objetivos del reglamento académico?</li>
-                <li onclick="hacerPregunta('¿Qué modalidades de estudio ofrece la universidad?')">¿Qué modalidades de estudio ofrece la universidad?</li>
-                <li onclick="hacerPregunta('¿Cómo se realiza la evaluación de los aprendizajes?')">¿Cómo se realiza la evaluación de los aprendizajes?</li>
-                <li onclick="hacerPregunta('¿Qué se necesita para la admisión y matrícula?')">¿Qué se necesita para la admisión y matrícula?</li>
-         </ul>
+            <h2 class="mb-3">Preguntas sugeridas:</h2>
+            <ul class="list-group mb-3">
+                <li class="list-group-item" onclick="hacerPregunta('¿Cuáles son los objetivos del reglamento académico?')">¿Cuáles son los objetivos del reglamento académico?</li>
+                <li class="list-group-item" onclick="hacerPregunta('¿Qué modalidades de estudio ofrece la universidad?')">¿Qué modalidades de estudio ofrece la universidad?</li>
+                <li class="list-group-item" onclick="hacerPregunta('¿Cómo se realiza la evaluación de los aprendizajes?')">¿Cómo se realiza la evaluación de los aprendizajes?</li>
+                <li class="list-group-item" onclick="hacerPregunta('¿Qué se necesita para la admisión y matrícula?')">¿Qué se necesita para la admisión y matrícula?</li>
+            </ul>
         </div>
         
-        <input type="text" id="pregunta" placeholder="Hazme una pregunta..." />
-        <button id="send-btn">Enviar</button>
+        <div class="input-group mb-3">
+            <input type="text" id="pregunta" class="form-control" placeholder="Hazme una pregunta...">
+            <div class="input-group-append">
+                <button id="send-btn" class="btn btn-primary">Enviar</button>
+            </div>
+        </div>
 
-        <img src="{{ url_for('static', filename='image.png') }}" alt="Estudiante Icono" id="estudiante-icon"> <!-- Icono del estudiante aquí -->
-        <button onclick="mostrarFlujo()">Ver flujo del proceso de titulación</button>
+        <img src="{{ url_for('static', filename='image.png') }}" alt="Estudiante Icono" id="estudiante-icon" class="img-fluid mb-4"> <!-- Icono del estudiante aquí -->
 
+        <div class="flujo-container text-center">
+            <button class="btn btn-info mb-3" onclick="mostrarFlujo()">Ver flujo del proceso de titulación</button>
+
+            <div id="canva-flujo" class="mb-3">
+                <iframe loading="lazy" src="https://www.canva.com/design/DAGTZj7QawA/Kcw9R7fZ2lgKC6VCoSDthA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+                <a href="https://www.canva.com/design/DAGTZj7QawA/Kcw9R7fZ2lgKC6VCoSDthA/view?utm_content=DAGTZj7QawA&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
+                    target="_blank" rel="noopener">Presentación Marco Teórico Ciencia Ilustrativo colorido</a> de Maria Del Carmen Salazar Torres
+            </div>
+        </div>
     </div>
-    
+
+    <!-- Vinculando Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
         function mostrarFlujo() {
-        const chatBox = document.getElementById('chat-box');
-        chatBox.innerHTML += `<div class="message"><p><strong>Flujo del Proceso de Titulación:</strong></p><img src="{{ url_for('static', filename='flujo_titulacion.png') }}" alt="Flujo del Proceso de Titulación"></div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
+            const canvaFlujo = document.getElementById('canva-flujo');
+            if (canvaFlujo.style.display === "none") {
+                canvaFlujo.style.display = "block";
+            } else {
+                canvaFlujo.style.display = "none";
+            }
+        }
+
         function hacerPregunta(pregunta) {
             document.getElementById('pregunta').value = pregunta;
             document.getElementById('send-btn').click();
@@ -44,7 +67,6 @@
             const pregunta = document.getElementById('pregunta').value;
             const chatBox = document.getElementById('chat-box');
 
-            // Mensaje del usuario
             chatBox.innerHTML += `<div class="message user-message"><p>${pregunta}</p></div>`;
             
             const response = await fetch('/ask', {
@@ -56,10 +78,9 @@
             });
             const data = await response.json();
 
-            // Mensaje del chatbot
             chatBox.innerHTML += `<div class="message"><p>${data.respuesta}</p></div>`;
             document.getElementById('pregunta').value = '';
-            chatBox.scrollTop = chatBox.scrollHeight; // Desplazarse hacia abajo
+            chatBox.scrollTop = chatBox.scrollHeight;
         };
     </script>
 </body>

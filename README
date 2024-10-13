@@ -1,0 +1,35 @@
+# Chatbot UNL
+
+Este proyecto es un chatbot desarrollado para la Universidad Nacional del Litoral (UNL). El chatbot está diseñado para asistir a los estudiantes y personal de la universidad proporcionando respuestas rápidas y precisas a preguntas frecuentes.
+
+## Comandos para levantar el proyecto
+
+1. Clonar el repositorio:
+    ```sh
+    git clone https://github.com/tu-usuario/Chatbot_UNL.git
+    ```
+
+2. Navegar al directorio del proyecto:
+    ```sh
+    cd Chatbot_UNL
+    ```
+
+3. Crear y activar un entorno virtual (opcional pero recomendado):
+    ```sh
+    python -m venv venv
+    source venv/bin/activate  # En Windows usa `venv\Scripts\activate`
+    ```
+
+
+5. Instalar dependecias
+    pip install flask PyPDF2 google-generativeai
+
+
+6. Ejecutar el chatbot:
+    ```sh
+    python app.py
+    ```
+
+## Descripción del Chatbot
+
+El Chatbot UNL es una herramienta interactiva que utiliza procesamiento de lenguaje natural (NLP) para entender y responder a las consultas de los usuarios. Está diseñado para mejorar la experiencia de los estudiantes y el personal, proporcionando información sobre horarios, eventos, servicios y más. El chatbot se puede integrar en diversas plataformas como sitios web, aplicaciones móviles y redes sociales.

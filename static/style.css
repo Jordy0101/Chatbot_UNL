@@ -56,3 +56,31 @@ iframe {
 .flujo-container button:hover {
     background-color: #495057;
 }
+/* Estilo para las preguntas frecuentes */
+.list-group-item {
+    cursor: pointer; /* Cambia el cursor al pasar sobre el elemento */
+    transition: background-color 0.3s ease; /* Transición suave para el efecto de hover */
+}
+
+/* Efecto de hover */
+.list-group-item:hover {
+    background-color: #007bff; /* Color de fondo al pasar el mouse */
+    color: white; /* Color del texto al pasar el mouse */
+}
+
+/* Estilo para distinguir mensajes del usuario y del chatbot */
+.user-message {
+    text-align: left;
+    background-color: #e7f3ff;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.chatbot-message {
+    text-align: left;
+    background-color: #d4edda;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}

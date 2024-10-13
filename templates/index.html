@@ -7,22 +7,25 @@
     <!-- Vinculando Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .question-item {
+            cursor: pointer;
+            padding: 10px;
+        }
+        .question-item:hover {
+            background-color: #116dc9; /* Color de fondo al pasar el mouse */
+        }
+        #pregunta {
+            height: 60px; /* Aumentar la altura del campo de texto */
+        }
+    </style>
 </head>
 <body>
     <div class="container text-center mt-5">
         <h1 class="mb-4">¡Hola! Soy tu chatbot</h1>
         <div id="chat-box" class="chat-box border p-3 mb-3"></div>
-        
-        <div id="sugerencias" class="sugerencias">
-            <h2 class="mb-3">Preguntas sugeridas:</h2>
-            <ul class="list-group mb-3">
-                <li class="list-group-item" onclick="hacerPregunta('¿Cuáles son los objetivos del reglamento académico?')">¿Cuáles son los objetivos del reglamento académico?</li>
-                <li class="list-group-item" onclick="hacerPregunta('¿Qué modalidades de estudio ofrece la universidad?')">¿Qué modalidades de estudio ofrece la universidad?</li>
-                <li class="list-group-item" onclick="hacerPregunta('¿Cómo se realiza la evaluación de los aprendizajes?')">¿Cómo se realiza la evaluación de los aprendizajes?</li>
-                <li class="list-group-item" onclick="hacerPregunta('¿Qué se necesita para la admisión y matrícula?')">¿Qué se necesita para la admisión y matrícula?</li>
-            </ul>
-        </div>
-        
+        <h3 class="mt-4">Preguntas Frecuentes</h3>
+        <ul id="preguntas-frecuentes" class="list-group mb-5"></ul> <!-- Contenedor para preguntas frecuentes -->
         <div class="input-group mb-3">
             <input type="text" id="pregunta" class="form-control" placeholder="Hazme una pregunta...">
             <div class="input-group-append">
@@ -30,12 +33,11 @@
             </div>
         </div>
 
-        <img src="{{ url_for('static', filename='image.png') }}" alt="Estudiante Icono" id="estudiante-icon" class="img-fluid mb-4"> <!-- Icono del estudiante aquí -->
+        <img src="{{ url_for('static', filename='image.png') }}" alt="Estudiante Icono" id="estudiante-icon" class="img-fluid mb-4">
 
         <div class="flujo-container text-center">
             <button class="btn btn-info mb-3" onclick="mostrarFlujo()">Ver flujo del proceso de titulación</button>
-
-            <div id="canva-flujo" class="mb-3" style="display: none;"> <!-- Oculto por defecto -->
+            <div id="canva-flujo" class="mb-3" style="display: none;">
                 <iframe loading="lazy" src="https://www.canva.com/design/DAGTZj7QawA/Kcw9R7fZ2lgKC6VCoSDthA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
                 <a href="https://www.canva.com/design/DAGTZj7QawA/Kcw9R7fZ2lgKC6VCoSDthA/view?utm_content=DAGTZj7QawA&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
                     target="_blank" rel="noopener">Presentación Marco Teórico Ciencia Ilustrativo colorido</a> de Maria Del Carmen Salazar Torres
@@ -47,7 +49,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='index.js') }}"></script> <!-- Vincular script JS separado -->
 </body>
 </html>

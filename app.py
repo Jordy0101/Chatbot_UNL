@@ -4,6 +4,13 @@ from PyPDF2 import PdfReader
 
 app = Flask(__name__)
 
+# Configuración de la API
+genai.configure(api_key="AIzaSyBDyn0mYQVdopEdOPPHkF_jyBt6tg1ZdBA")  # Reemplaza con tu API key
+
+# Rutas para guardar preguntas
+preguntas_file_path = "preguntas.txt"
+preguntas_frecuentes_file_path = "preguntas_frecuentes.txt"  # Archivo para preguntas frecuentes
+
 # Cargar el contenido del PDF
 def cargar_articulo(path):
     reader = PdfReader(path)
@@ -15,8 +22,26 @@ def cargar_articulo(path):
 # Cargar el texto del PDF
 texto_pdf = cargar_articulo("reglamento.pdf")  # Asegúrate de que el PDF esté en la misma carpeta o da la ruta correcta
 
-# Configurar la API con la clave
-genai.configure(api_key="AIzaSyBDyn0mYQVdopEdOPPHkF_jyBt6tg1ZdBA")  # Reemplaza con tu API key
+# Funciones para manejar preguntas
+def guardar_pregunta(pregunta):
+    with open(preguntas_file_path, 'a', encoding='utf-8') as f:
+        f.write(pregunta + '\n')
+
+def guardar_pregunta_frecuente(pregunta):
+    with open(preguntas_frecuentes_file_path, 'a', encoding='utf-8') as f:
+        f.write(pregunta + '\n')
+
+def obtener_preguntas():
+    # Cargar las preguntas desde el archivo
+    try:
+        with open(preguntas_frecuentes_file_path, 'r', encoding='utf-8') as f:
+            preguntas = [pregunta.strip() for pregunta in f.readlines() if pregunta.strip()]
+    except UnicodeDecodeError:
+        print("Error al decodificar el archivo. Intentando leer con otra codificación.")
+        # Intenta leer con otra codificación (por ejemplo, 'latin-1')
+        with open(preguntas_frecuentes_file_path, 'r', encoding='latin-1') as f:
+            preguntas = [pregunta.strip() for pregunta in f.readlines() if pregunta.strip()]
+    return preguntas
 
 @app.route('/')
 def index():
@@ -25,28 +50,55 @@ def index():
 @app.route('/ask', methods=['POST'])
 def ask():
     data = request.get_json()
-    pregunta = data.get('pregunta', '')
+    pregunta = data.get('pregunta', '').strip()
 
-    # Respuestas específicas sobre las preguntas frecuentes
-    respuestas_frecuentes = {
-        "¿Cuáles son los objetivos del reglamento académico?": "Los objetivos del Reglamento de Régimen Académico de la Universidad Nacional de Loja incluyen definir los principios, normas y disposiciones que regulan el funcionamiento académico en la universidad.",
-        "¿Qué modalidades de estudio ofrece la universidad?": "La universidad ofrece modalidades de estudio presencial, semipresencial, a distancia y en línea, adaptándose a las necesidades de los estudiantes.",
-        "¿Cómo se realiza la evaluación de los aprendizajes?": "La evaluación de los aprendizajes se basa en los criterios establecidos en el reglamento académico y los planes de estudio de cada carrera.",
-        "¿Qué se necesita para la admisión y matrícula?": "Para la admisión y matrícula, es necesario cumplir con los requisitos establecidos en el reglamento de admisión de la universidad.",
-    }
+    # Asegúrate de que la pregunta no esté vacía
+    if pregunta:
+        print("Pregunta recibida:", pregunta)
 
-    respuesta = respuestas_frecuentes.get(pregunta, "")
+        # Obtener todas las preguntas anteriores
+        preguntas_frecuentes = obtener_preguntas()
+        
+        # Verificar si la pregunta está en las preguntas frecuentes
+        if pregunta not in preguntas_frecuentes:
+            # Guardar la pregunta en el archivo
+            guardar_pregunta(pregunta)
 
-    if respuesta:
+            # Crear el prompt para detectar preguntas similares
+            prompt_similar = (
+                "He recibido la siguiente pregunta:\n\n"
+                f"{pregunta}\n\n"
+                "A continuación, te muestro un conjunto de preguntas previas:\n\n"
+                f"{chr(10).join(preguntas_frecuentes)}\n\n"
+                "Por favor, indícame si alguna de las preguntas anteriores es similar o "
+                "equivalente a la nueva. Si es así, genera una pregunta más general que "
+                "resuma solo las preguntas que son similares a la nueva, caso contrario solo dame la misma bien formulada, asegurate de darme solo la pregunta."
+            )
+            
+            # Llamada a la IA para analizar similitud
+            similar_response = genai.GenerativeModel("gemini-1.5-flash").generate_content(prompt_similar)
+            nueva_pregunta = similar_response.text.strip()
+            
+            if nueva_pregunta and nueva_pregunta != pregunta:
+                # Si la IA genera una nueva pregunta más general
+                guardar_pregunta_frecuente(nueva_pregunta)
+                print("Nueva pregunta bien formulada:", nueva_pregunta)
+
+        # Generar respuesta basada en el contenido del PDF
+        prompt_respuesta = f"Contexto: {texto_pdf}\n\n Revisa el documento de la Universidad Nacional de Loja y responde en español, además empieza diciendo: La UNL ofrece..: {pregunta}"
+        response = genai.GenerativeModel("gemini-1.5-flash").generate_content(prompt_respuesta)
+        respuesta = response.text
+
+        # Retornar solo la respuesta generada sin incluir la nueva pregunta
         return jsonify({'respuesta': respuesta})
-    
-    # Si no es una pregunta frecuente, genera respuesta basada en el contenido del PDF
-    prompt = f"Contexto: {texto_pdf}\n\n Revisa el documento y responde ademas empieza diciendo:La UNL ofrece..: {pregunta}"
 
-    response = genai.GenerativeModel("gemini-1.5-flash").generate_content(prompt)
-    respuesta = response.text
+    else:
+        return jsonify({'respuesta': 'No se recibió ninguna pregunta.'}), 400
 
-    return jsonify({'respuesta': respuesta})
+@app.route('/preguntas_frecuentes', methods=['GET'])
+def get_preguntas_frecuentes():
+    preguntas = obtener_preguntas()  # Llama a la función para obtener preguntas frecuentes
+    return jsonify({'preguntas_frecuentes': preguntas}) 
 
 if __name__ == '__main__':
     app.run(debug=True)

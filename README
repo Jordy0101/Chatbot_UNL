@@ -17,7 +17,7 @@ Este proyecto es un chatbot desarrollado para la Universidad Nacional de loja (U
 3. Crear y activar un entorno virtual (opcional pero recomendado):
     ```sh
     python -m venv venv
-    source venv/bin/activate  # En Windows usa `venv\Scripts\activate`
+   .\venv\Scripts\Activate.ps1   
     ```
 
 

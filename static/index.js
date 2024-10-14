@@ -1,19 +1,27 @@
 document.addEventListener("DOMContentLoaded", function() {
     cargarPreguntasFrecuentes(); // Cargar preguntas frecuentes al inicio
+    obtenerPreguntasFrecuentes(); // Cargar preguntas frecuentes cada 5 segundos
 
+    // Configurar eventos al cargar la página
     document.getElementById('send-btn').onclick = async function () {
         const pregunta = document.getElementById('pregunta').value;
         if (pregunta) {
             await enviarPregunta(pregunta); // Llama a enviarPregunta cuando se presiona el botón
         }
     };
+
+    // Detectar el evento de Enter en el input de la pregunta
+    document.getElementById('pregunta').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Evita el comportamiento por defecto del Enter
+            document.getElementById('send-btn').click(); // Simula el clic del botón de enviar
+        }
+    });
+
+    // Llama a la función de obtener preguntas frecuentes cada 5 segundos
+    setInterval(obtenerPreguntasFrecuentes, 5000); // Actualiza cada 5 segundos
 });
-document.getElementById('pregunta').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault(); // Evita el comportamiento por defecto del Enter
-        document.getElementById('send-btn').click(); // Simula el clic del botón de enviar
-    }
-});
+
 // Función para cargar preguntas frecuentes
 function cargarPreguntasFrecuentes() {
     fetch('/preguntas_frecuentes')
@@ -87,4 +95,38 @@ function mostrarFlujo() {
             canvaFlujo.style.display = "none"; // Ocultar el iframe
         }, 500); // Este tiempo debe coincidir con la duración de la transición de opacidad
     }
+}
+function mostrarDiagrama() {
+    var diagrama = document.getElementById("diagramaTitulacion");
+    
+    // Cambiar entre mostrar u ocultar la imagen
+    if (diagrama.style.display === "none") {
+        diagrama.style.display = "block";  // Muestra la imagen
+    } else {
+        diagrama.style.display = "none";   // Oculta la imagen si ya está visible
+    }
+}
+// Función para obtener preguntas frecuentes
+function obtenerPreguntasFrecuentes() {
+    fetch('/preguntas_frecuentes')
+        .then(response => response.json())
+        .then(data => {
+            const preguntasFrecuentes = data.preguntas_frecuentes;
+            const ul = document.getElementById('preguntas-frecuentes');
+            ul.innerHTML = ''; // Limpiar la lista existente
+            
+            // Mostrar solo las primeras 5 preguntas
+            preguntasFrecuentes.slice(0, 5).forEach(pregunta => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item question-item';
+                li.textContent = pregunta;
+                li.onclick = () => {
+                    // Al hacer clic en la pregunta, se puede enviar automáticamente
+                    document.getElementById('pregunta').value = pregunta;
+                    document.getElementById('send-btn').click();
+                };
+                ul.appendChild(li);
+            });
+        })
+        .catch(error => console.error('Error al obtener preguntas frecuentes:', error));
 }

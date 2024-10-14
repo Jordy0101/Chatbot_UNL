@@ -1,6 +1,6 @@
 /* Estilos generales */
 body {
-    background-color: #4d7da1; /* Color de fondo */
+    background-color: #6799c5; /* Color de fondo */
     font-family: 'Arial', sans-serif;
 }
 
@@ -38,24 +38,25 @@ iframe {
 
 /* Estudiante icon */
 #estudiante-icon {
-    max-width: 150px;
+    max-width: 550px;
     margin-bottom: 20px;
 }
 
 /* Botón de flujo */
 .flujo-container button {
     margin-right: 20px;
-    background-color: #6c757d;
+    background-color: #1668af;
     color: white;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 18px;
     transition: background-color 0.3s ease;
 }
 .flujo-container button:hover {
     background-color: #495057;
 }
+
 /* Estilo para las preguntas frecuentes */
 .list-group-item {
     cursor: pointer; /* Cambia el cursor al pasar sobre el elemento */
@@ -71,7 +72,7 @@ iframe {
 /* Estilo para distinguir mensajes del usuario y del chatbot */
 .user-message {
     text-align: left;
-    background-color: #e7f3ff;
+    background-color: #c7dcf1;
     padding: 10px;
     border-radius: 5px;
     margin: 5px 0;
@@ -79,8 +80,65 @@ iframe {
 
 .chatbot-message {
     text-align: left;
-    background-color: #d4edda;
-    padding: 10px;
-    border-radius: 5px;
+    background-color: #3b6845;
+    padding: 40px;
+    border-radius: 19px;
     margin: 5px 0;
 }
+
+/* Estilo para las preguntas frecuentes */
+.question-item {
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Hover para preguntas frecuentes */
+.question-item:hover {
+    background-color: #0493f3; /* Color de fondo al pasar el mouse */
+    color: #f0f2f3; /* Cambia el color del texto en hover para mejor distinción */
+}
+
+/* Estilos para la entrada de texto */
+#pregunta {
+    padding-right: 50px; /* Dejar espacio para el botón dentro del input */
+    height: 60px;
+    font-size: 18px; /* Aumentar tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+}
+
+/* Estilos del botón de enviar */
+.btn-send {
+    background-color: #28a745;
+    border-radius: 50%;
+    width: 50px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+}
+
+/* Estilos del ícono en el botón de enviar */
+.btn-send i {
+    color: white;
+    font-size: 18px;
+}
+
+/* Spinner de carga */
+.loading-spinner {
+    display: none;
+    margin-top: 10px;
+    background-color: #051309;
+}
+
+/* Estilos para el grupo de entrada */
+.input-group {
+    position: relative;
+    width: 100%;
+    background-color: #f8f9fa;
+}
+

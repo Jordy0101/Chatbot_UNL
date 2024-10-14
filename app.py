@@ -70,9 +70,7 @@ def ask():
                 f"{pregunta}\n\n"
                 "A continuación, te muestro un conjunto de preguntas previas:\n\n"
                 f"{chr(10).join(preguntas_frecuentes)}\n\n"
-                "Por favor, indícame si alguna de las preguntas anteriores es similar o "
-                "equivalente a la nueva. Si es así, genera una pregunta más general que "
-                "resuma solo las preguntas que son similares a la nueva, caso contrario solo dame la misma bien formulada, asegurate de darme solo la pregunta."
+                "Por favor dame una pregunta bien formulada, asegurate de darme solo la pregunta"
             )
             
             # Llamada a la IA para analizar similitud
